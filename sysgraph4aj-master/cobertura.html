@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Cobertura</title>
+</head>
+<body>
+<p>com/Entidade2</p>
+
+<p style="background-color:white;">package com;</p>
+<p style="background-color:white;"><br/></p>
+<p style="background-color:white;">import java.math.BigDecimal;</p>
+<p style="background-color:white;">import java.util.Iterator;</p>
+<p style="background-color:white;">import java.util.List;</p>
+<p style="background-color:white;"><br/></p>
+<p style="background-color:green;">public class Entidade2 {</p>
+<p style="background-color:white;"><br/></p>
+<p style="background-color:white;">	private String descricao;</p>
+<p style="background-color:white;"><br/></p>
+<p style="background-color:white;">	private Long id;</p>
+<p style="background-color:white;"><br/></p>
+<p style="background-color:white;">	private String nome;</p>
+<p style="background-color:white;"><br/></p>
+<p style="background-color:white;">	public String getDescricao() {</p>
+<p style="background-color:red;">		return this.descricao;</p>
+<p style="background-color:white;">	}</p>
+<p style="background-color:white;"><br/></p>
+<p style="background-color:white;">	public Long getId() {</p>
+<p style="background-color:red;">		return this.id;</p>
+<p style="background-color:white;">	}</p>
+<p style="background-color:white;"><br/></p>
+<p style="background-color:white;">	public String getNome() {</p>
+<p style="background-color:red;">		return this.nome;</p>
+<p style="background-color:white;">	}</p>
+<p style="background-color:white;"><br/></p>
+<p style="background-color:white;">	public BigDecimal multOrDivide(boolean isMult,</p>
+<p style="background-color:white;">			BigDecimal a, BigDecimal b) {</p>
+<p style="background-color:yellow;">		if (isMult) {</p>
+<p style="background-color:green;">			return a.multiply(b);</p>
+<p style="background-color:white;">		}</p>
+<p style="background-color:red;">		return a.divide(b);</p>
+<p style="background-color:white;">	}</p>
+<p style="background-color:white;"><br/></p>
+<p style="background-color:white;">	public boolean onlyEven(List<Integer> list) {</p>
+<p style="background-color:green;">		if (list.isEmpty()) {</p>
+<p style="background-color:green;">			return false;</p>
+<p style="background-color:white;">		}</p>
+<p style="background-color:green;">		Iterator<Integer> it = list.iterator();</p>
+<p style="background-color:green;">		while (it.hasNext()) {</p>
+<p style="background-color:green;">			if ((it.next() % 2) != 0) {</p>
+<p style="background-color:green;">				return false;</p>
+<p style="background-color:white;">			}</p>
+<p style="background-color:white;">		}</p>
+<p style="background-color:green;">		return true;</p>
+<p style="background-color:white;">	}</p>
+<p style="background-color:white;">/*</p>
+<p style="background-color:white;">	public boolean onlyOdd(List<Integer> list) {</p>
+<p style="background-color:white;">		if (list.isEmpty()) {</p>
+<p style="background-color:white;">			return false;</p>
+<p style="background-color:white;">		}</p>
+<p style="background-color:white;">		Iterator<Integer> it = list.iterator();</p>
+<p style="background-color:white;">		while (it.hasNext()) {</p>
+<p style="background-color:white;">			if ((it.next() % 2) == 0) {</p>
+<p style="background-color:white;">				return false;</p>
+<p style="background-color:white;">			}</p>
+<p style="background-color:white;">		}</p>
+<p style="background-color:white;">		return true;</p>
+<p style="background-color:white;">	}</p>
+<p style="background-color:white;"><br/></p>
+<p style="background-color:white;">	public void setDescricao(String descricao) {</p>
+<p style="background-color:white;">		this.descricao = descricao;</p>
+<p style="background-color:white;">	}</p>
+<p style="background-color:white;"><br/></p>
+<p style="background-color:white;">	public void setId(Long id) {</p>
+<p style="background-color:white;">		this.id = id;</p>
+<p style="background-color:white;">	}</p>
+<p style="background-color:white;"><br/></p>
+<p style="background-color:white;">	public void setNome(String nome) {</p>
+<p style="background-color:white;">		this.nome = nome;</p>
+<p style="background-color:white;">	}</p>
+<p style="background-color:white;"><br/></p>
+<p style="background-color:white;">	public Integer sumOnlyPositive(List<Integer> list) {</p>
+<p style="background-color:white;">		Integer sum = 0;</p>
+<p style="background-color:white;">		for (Integer i : list) {</p>
+<p style="background-color:white;">			if (i > 0) {</p>
+<p style="background-color:white;">				sum += i;</p>
+<p style="background-color:white;">			}</p>
+<p style="background-color:white;">		}</p>
+<p style="background-color:white;">		return sum;</p>
+<p style="background-color:white;">	}</p>
+<p style="background-color:white;"><br/></p>
+<p style="background-color:white;">	public Integer sumSequence(List<Integer> list) {</p>
+<p style="background-color:white;">		Integer sum = 0;</p>
+<p style="background-color:white;">		for (Integer i : list) {</p>
+<p style="background-color:white;">			sum += i;</p>
+<p style="background-color:white;">		}</p>
+<p style="background-color:white;">		return sum;</p>
+<p style="background-color:white;">	}*/</p>
+<p style="background-color:white;">}</p>
+</body>
+</html>

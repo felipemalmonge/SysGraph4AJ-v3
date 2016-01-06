@@ -1,0 +1,19 @@
+{
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": ".",
+			"name": "tcc",
+			"folder_exclude_patterns":[
+				"target",
+				"bin"
+			]
+		}
+	],
+	"settings":
+    {
+        "tab_size": 4,
+         "trim_trailing_white_space_on_save": true
+    },
+}

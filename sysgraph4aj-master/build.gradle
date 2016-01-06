@@ -1,0 +1,118 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'application'
+apply plugin: 'maven'
+
+//mainClassName = 'guiFx.Sysgraph4AJ'
+mainClassName = 'gui.MainWindow'
+group = 'tcc.malmonge'
+version = '2.1'
+jar {
+    manifest {
+        attributes 'Implementation-Title': 'SysGraph4AJ Gradle Version',
+                   'Implementation-Version': version
+    }
+}
+
+configurations {
+	ajc
+	ajtools
+	aspects
+	ajInpath
+	aspectpath
+}
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    // Use 'jcenter' for resolving your dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+	jcenter()
+	mavenCentral()
+
+}
+
+dependencies {
+    // The production code uses the SLF4J logging API at compile time
+ 	ajc files('lib/aspectj/aspectjtools.jar')
+ 	ajtools files('lib/aspectj/aspectjtools.jar')
+ 	compile files('lib/aspectj/aspectjrt.jar')
+
+ 	compile 'junit:junit:4.12'
+ 	compile files('lib/aspectj/aspectjtools.jar')
+    compile fileTree(dir: 'lib', include: '*.jar')
+    compile fileTree(dir: 'lib/jung2-2_0_1', include: '*.jar')
+
+    // Declare the dependency for your favourite test framework you want to use in your tests.
+    // TestNG is also supported by the Gradle Test task. Just change the
+    // testCompile dependency to testCompile 'org.testng:testng:6.8.1' and add
+    // 'test.useTestNG()' to your build script.
+    testCompile 'junit:junit:4.12'
+}
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.0'
+}
+
+task compileJava(dependsOn: JavaPlugin.PROCESS_RESOURCES_TASK_NAME, description: 'Compiles AspectJ Source', overwrite: true,type: Ajc){
+	dependsOn processResources
+	dependsOn project.configurations.compile.getTaskDependencyFromProjectDependency(true, JavaPlugin.JAR_TASK_NAME)
+	sourceSet = sourceSets.main
+	inputs.files(sourceSet.java.srcDirs)
+	outputs.dir(sourceSet.output.classesDir)
+	aspectPath = configurations.aspectpath
+}
+
+task compileTestJava(dependsOn: JavaPlugin.PROCESS_RESOURCES_TASK_NAME, description: 'Compiles AspectJ Test Source', overwrite: true,type: Ajc){
+	dependsOn processTestResources
+	dependsOn project.configurations.compile.getTaskDependencyFromProjectDependency(true, JavaPlugin.JAR_TASK_NAME)
+	sourceSet = sourceSets.test
+	inputs.files(sourceSet.java.srcDirs)
+	outputs.dir(sourceSet.output.classesDir)
+	aspectPath = files(configurations.aspectpath)
+}
+
+class Ajc extends DefaultTask {
+	SourceSet sourceSet
+	FileCollection aspectPath
+
+	Ajc() {
+		logging.captureStandardOutput(LogLevel.INFO)
+	}
+
+	@TaskAction
+
+	def compile() {
+		logger.debug(" Starting aspect compilation ...")
+		ant.taskdef(resource: "org/aspectj/tools/ant/taskdefs/aspectjTaskdefs.properties", classpath: project.configurations.ajtools.asPath)
+		logger.debug("  Running ant ajc task against destDir " + sourceSet.output.classesDir)
+		logger.debug("  	project.configurations.ajtools.asPath:"+ project.configurations.ajtools.asPath)
+		logger.debug("  	sourceSet.compileClasspath.asPath:"+ sourceSet.compileClasspath.asPath)
+		ant.iajc(
+				source:project.convention.plugins.java.sourceCompatibility,
+				target:project.convention.plugins.java.targetCompatibility,
+				destDir: sourceSet.output.classesDir,
+				maxmem:"512m", fork:"true",
+				aspectPath:aspectPath.asPath,
+				showWeaveInfo: 'true',
+				inpath:aspectPath.asPath,
+				sourceRootCopyFilter:"**/.svn/*,**/*.java",
+				classpath:sourceSet.compileClasspath.asPath){
+
+					logger.debug("  	Sourceroots:"+sourceSet.java.srcDirs)
+					sourceroots{
+						sourceSet.java.srcDirs.each{
+							logger.debug("  	 "+it.absolutePath)
+							pathelement(location:it.absolutePath)
+						}
+					}
+				}
+	}
+}
+
+//add aspectj support for eclipse plugin
+eclipse {
+	project {
+		natures = ['org.eclipse.jdt.core.javanature','org.eclipse.ajdt.aspectpath']
+		buildCommand 'org.eclipse.jdt.core.javabuilder'
+		buildCommand 'org.eclipse.ajdt.core.ajbuilder'
+	}
+}
